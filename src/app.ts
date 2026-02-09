@@ -109,9 +109,48 @@ export class App {
     // Clear search
     this.searchInput.value = '';
     this.resultsHeader.textContent = '';
-    this.resultsList.innerHTML = '';
     this.results = [];
     this.selectedIndex = -1;
+
+    // Show categorized browse in sidebar
+    this.resultsList.innerHTML = `
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">File Operations</div>
+        <a class="sidebar-link" href="#ls.1">ls <span>list directory</span></a>
+        <a class="sidebar-link" href="#cp.1">cp <span>copy files</span></a>
+        <a class="sidebar-link" href="#mv.1">mv <span>move / rename</span></a>
+        <a class="sidebar-link" href="#rm.1">rm <span>remove files</span></a>
+        <a class="sidebar-link" href="#chmod.1">chmod <span>change permissions</span></a>
+        <a class="sidebar-link" href="#chown.1">chown <span>change owner</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Text Processing</div>
+        <a class="sidebar-link" href="#grep.1">grep <span>search patterns</span></a>
+        <a class="sidebar-link" href="#sed.1">sed <span>stream editor</span></a>
+        <a class="sidebar-link" href="#awk.1">awk <span>text processing</span></a>
+        <a class="sidebar-link" href="#sort.1">sort <span>sort lines</span></a>
+        <a class="sidebar-link" href="#cut.1">cut <span>extract columns</span></a>
+        <a class="sidebar-link" href="#wc.1">wc <span>word count</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Networking</div>
+        <a class="sidebar-link" href="#ssh.1">ssh <span>remote login</span></a>
+        <a class="sidebar-link" href="#curl.1">curl <span>transfer URLs</span></a>
+        <a class="sidebar-link" href="#wget.1">wget <span>download files</span></a>
+        <a class="sidebar-link" href="#ip.8">ip <span>network config</span></a>
+        <a class="sidebar-link" href="#ss.8">ss <span>socket stats</span></a>
+        <a class="sidebar-link" href="#nmap.1">nmap <span>port scanner</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">System</div>
+        <a class="sidebar-link" href="#ps.1">ps <span>process status</span></a>
+        <a class="sidebar-link" href="#top.1">top <span>task manager</span></a>
+        <a class="sidebar-link" href="#kill.1">kill <span>signal process</span></a>
+        <a class="sidebar-link" href="#systemctl.1">systemctl <span>service manager</span></a>
+        <a class="sidebar-link" href="#journalctl.1">journalctl <span>view logs</span></a>
+        <a class="sidebar-link" href="#df.1">df <span>disk usage</span></a>
+      </div>
+    `;
 
     // Hide clear button
     this.updateClearButton();
@@ -132,16 +171,14 @@ export class App {
         </div>
         <p class="hint">Press <kbd>/</kbd> to search &middot; click logo to change theme</p>
         <div class="quick-links">
-          <a href="#grep.1">grep</a>
-          <a href="#awk.1">awk</a>
-          <a href="#sed.1">sed</a>
-          <a href="#find.1">find</a>
-          <a href="#ssh.1">ssh</a>
-          <a href="#curl.1">curl</a>
-          <a href="#git.1">git</a>
-          <a href="#docker.1">docker</a>
-          <a href="#tar.1">tar</a>
-          <a href="#chmod.1">chmod</a>
+          <a class="quick-link" href="#grep.1"><div><div class="quick-link-name">grep</div><div class="quick-link-desc">Search text with patterns</div></div></a>
+          <a class="quick-link" href="#awk.1"><div><div class="quick-link-name">awk</div><div class="quick-link-desc">Pattern scanning &amp; processing</div></div></a>
+          <a class="quick-link" href="#find.1"><div><div class="quick-link-name">find</div><div class="quick-link-desc">Search for files in directories</div></div></a>
+          <a class="quick-link" href="#ssh.1"><div><div class="quick-link-name">ssh</div><div class="quick-link-desc">Remote login program</div></div></a>
+          <a class="quick-link" href="#curl.1"><div><div class="quick-link-name">curl</div><div class="quick-link-desc">Transfer data from URLs</div></div></a>
+          <a class="quick-link" href="#git.1"><div><div class="quick-link-name">git</div><div class="quick-link-desc">Distributed version control</div></div></a>
+          <a class="quick-link" href="#docker.1"><div><div class="quick-link-name">docker</div><div class="quick-link-desc">Container runtime</div></div></a>
+          <a class="quick-link" href="#tar.1"><div><div class="quick-link-name">tar</div><div class="quick-link-desc">Archive files</div></div></a>
         </div>
       </div>
     `;
