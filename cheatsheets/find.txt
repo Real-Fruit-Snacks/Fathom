@@ -1,0 +1,40 @@
+# Advanced find Examples
+
+## Find files modified in the last 7 days
+find . -mtime -7
+
+## Find files larger than 100MB
+find . -size +100M
+
+## Find and delete empty files
+find . -empty -type f -delete
+
+## Find files by permission
+find . -perm 644
+
+## Find files owned by specific user
+find . -user username
+
+## Find and execute command on results
+find . -name "*.log" -exec rm {} \;
+
+## Find files excluding certain directories
+find . -path ./node_modules -prune -o -name "*.js" -print
+
+## Find files modified between two dates
+find . -newermt "2023-01-01" ! -newermt "2023-12-31"
+
+## Find broken symbolic links
+find . -xtype l
+
+## Find duplicate files by size
+find . -type f -printf '%s\n' | sort -n | uniq -d
+
+## Find files with specific content
+find . -type f -exec grep -l "pattern" {} \;
+
+## Find and change permissions
+find . -type f -name "*.sh" -exec chmod +x {} \;
+
+## Find files not accessed in 30 days
+find . -atime +30

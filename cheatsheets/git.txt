@@ -1,0 +1,46 @@
+# Advanced git Examples
+
+## Interactive rebase for last 5 commits
+git rebase -i HEAD~5
+
+## Show commit history with graph
+git log --oneline --graph --all
+
+## Stash changes with description
+git stash save "Work in progress on feature X"
+
+## Cherry-pick a commit
+git cherry-pick <commit-hash>
+
+## Find who changed a line
+git blame filename.txt
+
+## Undo last commit but keep changes
+git reset --soft HEAD~1
+
+## Search through commit messages
+git log --grep="bug fix"
+
+## Show commits by author
+git log --author="John"
+
+## Compare branches
+git diff branch1..branch2
+
+## Clean untracked files (dry run)
+git clean -n
+
+## Show remote tracking branches
+git branch -vv
+
+## Prune deleted remote branches
+git remote prune origin
+
+## Squash all commits in a branch
+git rebase -i $(git merge-base HEAD master)
+
+## Show file history with diffs
+git log -p filename.txt
+
+## List all aliases
+git config --get-regexp alias

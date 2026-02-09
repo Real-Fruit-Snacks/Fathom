@@ -1,0 +1,111 @@
+DOAS.CONF(5)                                                  File Formats Manual                                                  DOAS.CONF(5)
+
+NAME
+       doas.conf - doas configuration file
+
+SYNOPSIS
+       /etc/doas.conf
+
+DESCRIPTION
+       The doas(1) utility executes commands as another user according to the rules in the doas.conf configuration file.
+
+       The rules have the following format:
+
+           permit|deny [options] identity [as target] [cmd command [args ...]]
+
+       Rules consist of the following parts:
+
+       permit|deny
+              The action to be taken if this rule matches.
+
+       options
+              Options are:
+
+              nopass
+                     The user is not required to enter a password.
+
+              persist
+                     After the user successfully authenticates, do not ask for a password again for some time.
+
+              keepenv
+                     The user's environment is maintained. The default is to reset the environment, except for the variables DISPLAY,  HOME,
+                     LOGNAME, MAIL, PATH, TERM, USER and USERNAME.
+
+              setenv { [variable ...] [variable=value ...] }
+                     In  addition  to  the  variables  mentioned  above,  keep  the  space-separated  specified  variables.  Variables  may
+                     also be removed with a leading '-' or set using the  latter  syntax.  If  the  first  character  of  value  is  a  '$'
+                     then  the value to be set is taken from the existing environment variable of the indicated name.
+
+       identity
+              The username to match. Groups may be specified by prepending a colon (':').  Numeric IDs are also accepted.
+
+       as target
+              The target user the running user is allowed to run the command as. The default is all users.
+
+       cmd command [args ...]
+              The command the user is allowed or denied to run. The default is all commands.  Be  advised  that  it  is  best  to  specify
+              absolute paths. If a relative path is specified, only a restricted PATH will be searched.
+
+              The args arguments can be used to specify arguments to command. If args is  present,  the  command  arguments  must  match
+              exactly,  except  for  wildcard  matching.  The  wildcard  matching  allows  for  shell-style wildcards, such as *, ?, and
+              [...] character class matching.
+
+       The last matching rule determines the action taken. If no rule matches, the action is denied.
+
+       Comments can be put anywhere in the file using a hash mark  ('#'),  and  extend  to  the  end  of  the  current  line.
+
+       The following quoting rules apply:
+
+       • The text between a pair of double quotes ('"') is taken as is.
+
+       • The backslash character ('\') escapes the next character, including new line characters, outside comments; as a result, comments  may
+         not be extended over multiple lines.
+
+       • If quotes or backslashes are used in a word, it isn't considered a keyword.
+
+EXAMPLES
+       The following example permits users in group wheel to execute commands as root:
+
+           permit :wheel
+
+       The following example permits user bob to run commands as any user within group staff:
+
+           permit bob as :staff
+
+       The following example permits user alice to run /usr/bin/id as root without a password:
+
+           permit nopass alice cmd /usr/bin/id
+
+       The following example permits user bob to run /bin/echo with specific arguments:
+
+           permit bob cmd /bin/echo args hello world
+
+       The following example permits user eve to run any command as any user except root:
+
+           permit eve
+           deny eve as root
+
+       The following example permits user dave to run /usr/bin/procstat as root on a system where the persist  feature  is  implemented.  After
+       dave successfully authenticates, he will not be prompted for a password for 5 minutes:
+
+           permit persist dave cmd /usr/bin/procstat
+
+       The following example permits user john to run any command as root while keeping the environment variables ENV_VAR and OTHER_VAR:
+
+           permit keepenv { ENV_VAR OTHER_VAR } john
+
+       The following example permits user jane to run any command as root while keeping all environment variables  except  ENV_VAR  and  setting
+       the variable FOO to "bar":
+
+           permit setenv { -ENV_VAR FOO=bar } jane
+
+SEE ALSO
+       doas(1)
+
+HISTORY
+       The doas.conf configuration file first appeared in OpenBSD 5.8.
+
+AUTHORS
+       Ted Unangst <tedu@openbsd.org>
+
+                                                                                                                                   DOAS.CONF(5)

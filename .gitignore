@@ -1,0 +1,174 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build and distribution
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+.AppleDouble
+.LSOverride
+.fuse_hidden*
+.directory
+.Trash-*
+ehthumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.*.swp
+.*.swo
+*.swp
+*.swo
+*~
+.#*
+\#*#
+
+# AI tools
+.claude/
+.omc/
+.cursor/
+.cursorrules
+.cursorignore
+.aider*
+.continue/
+.codeium/
+.codex/
+.tabnine*
+.sourcery.yaml
+.cody/
+AGENTS.md
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python cache (for helper scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Cache directories
+.cache/
+.parcel-cache/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+*.rej
+nohup.out
+
+# Logs
+*.log
+*.log.*
+server.log
+access.log
+error.log
+debug.log
+
+# Compressed archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.pkg
+
+# Release packages
+fathom-*/
+
+# Backup directories
+backups/
+backup/
+
+# Test screenshots
+test_screenshots/
+test-screenshots/
+screenshot_*.png
+*test*.png
+*debug*.png
+cmd-*.png
+extreme-*.png
+final-*.png
+fixed-*.png
+initial-*.png
+super-complex-*.png
+
+# Development and testing files
+test*.js
+debug*.js
+*test*.js
+analyze_*.js
+extract-*.js
+generate-*.js
+fix_*.js
+check_*.js
+categorize-*.js
+comprehensive*.js
+quick*.js
+simple*.js
+focused*.js
+final*.js
+success*.js
+detailed*.js
+manual*.js
+temp*.js
+error_investigation.js
+cleaned_js.js
+extracted_js.js
+fixed_js.js
+
+# Reports and analysis files
+*_report.json
+*_report.md
+parsing_*.json
+verification-*.json
+*_analysis.md
+*_summary.js
+
+# Temporary HTML files
+*test*.html
+manual*.html
+
+# Shell scripts (except essential ones)
+create_release_package.sh
+
+# Local development servers
+.serve/
+local-server/
+dev-server/
+
+# Performance and profiling
+*.prof
+*.trace
+perf.data*
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Documentation drafts
+draft-*.md
+todo-*.md
+notes-*.txt
+
+# Test reports and development files
+test-reports/
+scripts/
+CLAUDE.md
+*_FAVICON_OPTIONS.md
+HACK_THE_BOX_THEME.md

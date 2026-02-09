@@ -1,0 +1,105 @@
+DOAS(1)                                                       General Commands Manual                                                      DOAS(1)
+
+NAME
+       doas - execute commands as another user
+
+SYNOPSIS
+       doas [-Lns] [-a style] [-C config] [-u user] command [args]
+
+DESCRIPTION
+       The doas utility executes the given command as another user. The command argument is mandatory unless -C, -L, or -s is specified.
+
+       The user will be required to authenticate by entering their password, unless configured otherwise.
+
+       By default, a new environment is created. The new environment contains the variables DISPLAY, HOME, LOGNAME, MAIL, PATH, TERM, USER  and
+       USERNAME.  HOME,  LOGNAME,  MAIL, USER and USERNAME are set to values appropriate for the target user. DISPLAY and TERM are copied from
+       the current environment. If the command argument includes any environment variables, they will be set for the new environment. PATH is set
+       to  /bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin for the target user, unless the target user is root, in which case an
+       appropriate system default is used.
+
+       The options are as follows:
+
+       -a style
+              Use the specified authentication style when validating the user, as allowed by /etc/login.conf. A list of  doas-specific
+              authentication  methods  may  be  configured  by adding an 'auth-doas' entry in login.conf(5).
+
+       -C config
+              Parse and check the configuration file config, then exit. If command is supplied, doas will also perform command matching.  In
+              the latter case either 'permit', 'permit nopass' or 'deny' will be printed on standard output, depending on  command  matching
+              results.  No  command  is  executed.
+
+       -L     Clear  any  persisted  authentication for the current tty and exit. No command is executed.
+
+       -n     Non interactive mode, fail if doas would prompt for password.
+
+       -s     Execute the shell from SHELL or /etc/passwd.
+
+       -u user
+              Execute the command as user. The default is root.
+
+EXIT STATUS
+       doas may fail for one of the following reasons:
+
+       • The config file /etc/doas.conf could not be parsed.
+       • The user attempted to run a command which is not permitted.
+       • The password was incorrect.
+       • The -C option could not be read.
+       • The -s option was specified but could not be executed.
+
+       Otherwise, the exit status of doas shall be that of command.
+
+FILES
+       /etc/doas.conf     doas configuration file.
+
+EXAMPLES
+       The following example runs the id command as root, printing the id of root.
+
+           $ doas id
+           uid=0(root) gid=0(wheel) groups=0(wheel), 2(kmem), 3(sys)
+
+       The following example runs vi as root on the kernel configuration file.
+
+           $ doas vi /bsd
+
+       The following example runs id as user jack, printing the id of user jack.
+
+           $ doas -u jack id
+           uid=1000(jack) gid=1000(jack) groups=1000(jack), 0(wheel)
+
+       The following example runs vi as user jack on the file ~/syslog.conf, using the home directory of user jack.
+
+           $ doas -u jack vi ~jack/syslog.conf
+
+       The following example runs sed as root, replacing instances of foo with bar in the file /etc/rc.local. Via the  -s  flag,  the  shell  is
+       told to process quoted strings and I/O redirection.
+
+           $ doas -s sed -i 's/foo/bar/g' /etc/rc.local
+
+       The following example runs a shell as root, with a modified PATH variable.
+
+           $ doas sh -c 'PATH=/sbin:/bin:/usr/sbin:/usr/bin ; which ifconfig'
+           /sbin/ifconfig
+
+       The following example runs env as root, with a modified PATH variable.
+
+           $ doas env PATH=/sbin:/bin:/usr/sbin:/usr/bin which ifconfig
+           /sbin/ifconfig
+
+SEE ALSO
+       su(1), doas.conf(5)
+
+HISTORY
+       The doas command first appeared in OpenBSD 5.8.
+
+AUTHORS
+       Ted Unangst <tedu@openbsd.org>
+
+CAVEATS
+       The doas command is not intended to entirely replace sudo. Although doas can be configured to allow  users  to  run  commands  as  other
+       users,  it  is  not  intended  to  be  a  general  purpose  tool  for  sharing  access.  The  password  prompt  and  the  "command not
+       permitted" messages are intentionally vague to avoid leaking information.
+
+       The persist feature is disabled on Linux because the Linux port lacks a mechanism for reliably tracking  tty  ownership.  The  feature
+       has been successfully implemented on FreeBSD.
+
+                                                                                                                                          DOAS(1)

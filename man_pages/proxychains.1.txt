@@ -1,0 +1,25 @@
+PROXYCHAINS(1)                                                General Commands Manual                                               PROXYCHAINS(1)
+
+NAME
+       proxychains - redirect connections through proxy servers
+
+SYNOPSIS
+       proxychains program [arguments]
+
+DESCRIPTION
+       This is a symlink to proxychains4. See proxychains4(1) for full documentation.
+
+       ProxyChains is a UNIX program, that hooks network-related libc functions in dynamically linked programs via a preloaded DLL and redirects
+       the connections through SOCKS4a/5 or HTTP proxies.
+
+EXAMPLES
+       Run telnet through proxies:
+              proxychains telnet targethost.com
+
+       Run ssh through proxies:
+              proxychains ssh user@targethost.com
+
+SEE ALSO
+       proxychains4(1), tor(1), torify(1), tsocks(1)
+
+                                                                                                                                    PROXYCHAINS(1)

@@ -1,0 +1,49 @@
+# Advanced sed Examples
+
+## Basic substitution
+sed 's/old/new/' file.txt
+
+## Global substitution (all occurrences)
+sed 's/old/new/g' file.txt
+
+## Case-insensitive substitution
+sed 's/old/new/I' file.txt
+
+## In-place editing with backup
+sed -i.bak 's/old/new/g' file.txt
+
+## Delete lines matching pattern
+sed '/pattern/d' file.txt
+
+## Delete specific line numbers
+sed '5d' file.txt
+
+## Delete range of lines
+sed '5,10d' file.txt
+
+## Print only matching lines
+sed -n '/pattern/p' file.txt
+
+## Multiple operations
+sed -e 's/old/new/g' -e '/pattern/d' file.txt
+
+## Insert line before match
+sed '/pattern/i\New line before' file.txt
+
+## Append line after match
+sed '/pattern/a\New line after' file.txt
+
+## Extract specific fields
+sed 's/.*\[\(.*\)\].*/\1/' file.txt
+
+## Replace only on specific lines
+sed '5,10s/old/new/g' file.txt
+
+## Use different delimiter
+sed 's|/path/to/file|/new/path|g' file.txt
+
+## Remove HTML tags
+sed 's/<[^>]*>//g' file.html
+
+## Convert DOS to Unix line endings
+sed 's/\r$//' file.txt

@@ -1,0 +1,101 @@
+name: Create Release
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          BASE_URL: /
+
+      - name: Create app zip (dist + data + tldr + cheatsheets)
+        run: |
+          mkdir -p release
+          cp -r data dist/
+          cp -r tldr_pages dist/
+          cp -r cheatsheets dist/ 2>/dev/null || true
+          cd dist && zip -r ../release/fathom-app.zip . && cd ..
+
+      - name: Create man page zips (split to stay under 20MB each)
+        run: |
+          cd man_pages
+
+          # Get sorted file list
+          files=($(ls -1 | sort))
+          total=${#files[@]}
+
+          chunk=1
+          current_size=0
+          max_bytes=$((18 * 1024 * 1024))  # 18MB compressed target (leaves headroom under 20MB)
+          file_list=()
+
+          for f in "${files[@]}"; do
+            file_list+=("$f")
+            current_size=$((current_size + $(stat --format=%s "$f")))
+
+            # Check if raw size exceeds ~60MB (compresses to ~18MB at ~70% ratio)
+            if [ "$current_size" -ge $((60 * 1024 * 1024)) ]; then
+              zip -r "../release/fathom-man-pages-${chunk}.zip" "${file_list[@]}"
+              chunk=$((chunk + 1))
+              current_size=0
+              file_list=()
+            fi
+          done
+
+          # Remaining files
+          if [ ${#file_list[@]} -gt 0 ]; then
+            zip -r "../release/fathom-man-pages-${chunk}.zip" "${file_list[@]}"
+          fi
+
+          cd ..
+
+      - name: Verify all zips are under 20MB
+        run: |
+          echo "Release artifacts:"
+          ls -lh release/
+          echo ""
+          oversized=0
+          for f in release/*.zip; do
+            size=$(stat --format=%s "$f")
+            name=$(basename "$f")
+            mb=$((size / 1024 / 1024))
+            echo "$name: ${mb}MB"
+            if [ "$size" -gt $((20 * 1024 * 1024)) ]; then
+              echo "ERROR: $name exceeds 20MB!"
+              oversized=1
+            fi
+          done
+          if [ "$oversized" -eq 1 ]; then
+            echo ""
+            echo "Some zips exceed 20MB. Adjust the split threshold."
+            exit 1
+          fi
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for f in release/*.zip; do
+            echo "Uploading $(basename $f)..."
+            gh release upload "${{ github.event.release.tag_name }}" "$f" --clobber
+          done

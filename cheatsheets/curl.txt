@@ -1,0 +1,43 @@
+# Advanced curl Examples
+
+## Download file with custom name
+curl -o custom_name.txt https://example.com/file.txt
+
+## Follow redirects
+curl -L https://bit.ly/shortened
+
+## Send POST request with data
+curl -X POST -d "param1=value1&param2=value2" https://api.example.com
+
+## Send JSON data
+curl -H "Content-Type: application/json" -d '{"key":"value"}' https://api.example.com
+
+## Download with progress bar
+curl -# -O https://example.com/large_file.zip
+
+## Set custom headers
+curl -H "Authorization: Bearer TOKEN" https://api.example.com
+
+## Save response headers
+curl -D headers.txt https://example.com
+
+## Use proxy
+curl -x proxy.server:8080 https://example.com
+
+## Limit download speed
+curl --limit-rate 200K -O https://example.com/file.zip
+
+## Resume interrupted download
+curl -C - -O https://example.com/large_file.zip
+
+## Test API with verbose output
+curl -v https://api.example.com/endpoint
+
+## Upload file
+curl -F "file=@/path/to/file.txt" https://upload.example.com
+
+## Basic authentication
+curl -u username:password https://secure.example.com
+
+## Cookie handling
+curl -c cookies.txt -b cookies.txt https://example.com

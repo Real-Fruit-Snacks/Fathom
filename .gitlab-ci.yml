@@ -1,0 +1,45 @@
+# GitLab CI/CD configuration for GitLab Pages deployment
+# This file enables automatic deployment of the Linux Man Pages application
+
+image: node:20-alpine
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - BASE_URL="/$CI_PROJECT_NAME/" npm run build
+    - mkdir -p public
+    - cp -r dist/* public/
+    - cp -r data public/
+    - cp -r man_pages public/
+    - cp -r tldr_pages public/
+    - cp -r themes public/
+    - cp -r cheatsheets public/ || true
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 week
+
+pages:
+  stage: deploy
+  script:
+    - echo "Deploying Linux Man Pages to GitLab Pages..."
+    - echo "Total files:" && find public -type f | wc -l
+    - echo "Total size:" && du -sh public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+    - master
+  environment:
+    name: production
+    url: https://$CI_PROJECT_NAMESPACE.gitlab.io/$CI_PROJECT_NAME

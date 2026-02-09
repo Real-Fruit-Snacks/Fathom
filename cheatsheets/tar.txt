@@ -1,0 +1,40 @@
+# Advanced tar Examples
+
+## Create archive with compression
+tar -czf archive.tar.gz /path/to/directory
+
+## Extract archive with verbose output
+tar -xzvf archive.tar.gz
+
+## List contents without extracting
+tar -tzf archive.tar.gz
+
+## Create archive excluding certain files
+tar -czf archive.tar.gz --exclude='*.log' /path/to/directory
+
+## Extract to specific directory
+tar -xzf archive.tar.gz -C /path/to/destination
+
+## Create archive with progress
+tar -czf - /path/to/directory | pv > archive.tar.gz
+
+## Extract specific files
+tar -xzf archive.tar.gz path/to/specific/file
+
+## Append files to existing archive
+tar -rf archive.tar file1 file2
+
+## Create archive preserving permissions
+tar -czpf archive.tar.gz /path/to/directory
+
+## Extract newer files only
+tar -xzf archive.tar.gz --keep-newer-files
+
+## Create multi-volume archive
+tar -czf - /path/to/directory | split -b 100M - archive.tar.gz.
+
+## Compare archive with filesystem
+tar -dzf archive.tar.gz
+
+## Create archive with date in filename
+tar -czf backup_$(date +%Y%m%d).tar.gz /path/to/directory

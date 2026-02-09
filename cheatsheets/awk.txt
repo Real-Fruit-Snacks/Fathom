@@ -1,0 +1,52 @@
+# Advanced awk Examples
+
+## Print specific columns
+awk '{print $1, $3}' file.txt
+
+## Print with custom separator
+awk '{print $1 ":" $2}' file.txt
+
+## Pattern matching
+awk '/pattern/ {print}' file.txt
+
+## Print lines where field matches
+awk '$3 == "value" {print}' file.txt
+
+## Numeric comparisons
+awk '$1 > 100 {print}' file.txt
+
+## Sum a column
+awk '{sum += $1} END {print sum}' file.txt
+
+## Count lines matching pattern
+awk '/pattern/ {count++} END {print count}' file.txt
+
+## Print line numbers
+awk '{print NR, $0}' file.txt
+
+## Field separator
+awk -F: '{print $1}' /etc/passwd
+
+## Multiple patterns
+awk '/start/,/end/ {print}' file.txt
+
+## Calculate average
+awk '{sum+=$1; count++} END {print sum/count}' file.txt
+
+## Print unique values
+awk '!seen[$1]++' file.txt
+
+## Format output
+awk '{printf "%-10s %5d\n", $1, $2}' file.txt
+
+## Process CSV files
+awk -F, '{print $2}' file.csv
+
+## Skip header line
+awk 'NR>1 {print}' file.txt
+
+## Replace values
+awk '{gsub(/old/, "new"); print}' file.txt
+
+## Multiple files
+awk 'FNR==1 {print FILENAME}' *.txt

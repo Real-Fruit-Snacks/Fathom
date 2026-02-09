@@ -1,0 +1,40 @@
+# Advanced grep Examples
+
+## Search for a pattern in multiple files
+grep "pattern" file1 file2 file3
+
+## Search recursively ignoring case
+grep -ri "pattern" /path/to/directory
+
+## Show line numbers and filenames
+grep -Hn "pattern" *.txt
+
+## Search for whole words only
+grep -w "word" file.txt
+
+## Invert match (show lines NOT containing pattern)
+grep -v "pattern" file.txt
+
+## Show 3 lines before and after match
+grep -C 3 "pattern" file.txt
+
+## Use extended regex
+grep -E "pattern1|pattern2" file.txt
+
+## Count occurrences
+grep -c "pattern" file.txt
+
+## Search for lines starting with pattern
+grep "^pattern" file.txt
+
+## Search for lines ending with pattern
+grep "pattern$" file.txt
+
+## Search in compressed files
+zgrep "pattern" file.gz
+
+## Exclude certain files from recursive search
+grep -r --exclude="*.log" "pattern" .
+
+## Search only in specific file types
+grep -r --include="*.py" "pattern" .
