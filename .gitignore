@@ -80,7 +80,6 @@ error.log
 debug.log
 
 # Compressed archives
-*.zip
 *.tar.gz
 *.rar
 *.7z
@@ -88,7 +87,6 @@ debug.log
 *.pkg
 
 # Release packages
-release/
 fathom-*/
 
 # Backup directories
