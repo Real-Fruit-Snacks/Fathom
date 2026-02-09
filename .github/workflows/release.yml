@@ -2,7 +2,12 @@ name: Create Release
 
 on:
   release:
-    types: [created]
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to upload assets to (e.g. v1.1.0)'
+        required: true
 
 permissions:
   contents: write
@@ -94,8 +99,9 @@ jobs:
       - name: Upload release assets
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name || github.event.inputs.tag }}
         run: |
           for f in release/*.zip; do
-            echo "Uploading $(basename $f)..."
-            gh release upload "${{ github.event.release.tag_name }}" "$f" --clobber
+            echo "Uploading $(basename $f) to ${TAG}..."
+            gh release upload "$TAG" "$f" --clobber
           done
