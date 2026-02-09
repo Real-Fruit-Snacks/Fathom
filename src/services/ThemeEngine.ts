@@ -84,9 +84,13 @@ export class ThemeEngine {
     }
 
     // Load saved theme
-    const saved = localStorage.getItem('theme');
-    if (saved && this.themes.has(saved)) {
-      this.currentTheme = saved;
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved && this.themes.has(saved)) {
+        this.currentTheme = saved;
+      }
+    } catch {
+      // localStorage unavailable (restricted browser policy) — use default theme
     }
 
     // Apply initial theme
@@ -113,7 +117,11 @@ export class ThemeEngine {
 
     this.currentTheme = name;
     this.applyTheme(name);
-    localStorage.setItem('theme', name);
+    try {
+      localStorage.setItem('theme', name);
+    } catch {
+      // localStorage unavailable — theme persists only for this session
+    }
 
     // Notify listeners
     const theme = this.themes.get(name)!;
