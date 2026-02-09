@@ -119,8 +119,7 @@ export class App {
     this.content.innerHTML = `
       <div class="welcome">
         <h1>Fathom</h1>
-        <p>Lightning-fast documentation browser</p>
-        <p>Start typing to search</p>
+        <p class="tagline">Lightning-fast documentation browser</p>
         <div class="stats">
           <div class="stat">
             <div class="stat-value">10,301</div>
@@ -128,8 +127,21 @@ export class App {
           </div>
           <div class="stat">
             <div class="stat-value">1,578</div>
-            <div class="stat-label">TLDR Summaries</div>
+            <div class="stat-label">TLDR summaries</div>
           </div>
+        </div>
+        <p class="hint">Press <kbd>/</kbd> to search &middot; click logo to change theme</p>
+        <div class="quick-links">
+          <a href="#grep.1">grep</a>
+          <a href="#awk.1">awk</a>
+          <a href="#sed.1">sed</a>
+          <a href="#find.1">find</a>
+          <a href="#ssh.1">ssh</a>
+          <a href="#curl.1">curl</a>
+          <a href="#git.1">git</a>
+          <a href="#docker.1">docker</a>
+          <a href="#tar.1">tar</a>
+          <a href="#chmod.1">chmod</a>
         </div>
       </div>
     `;
